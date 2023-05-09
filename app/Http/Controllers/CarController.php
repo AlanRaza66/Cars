@@ -31,7 +31,12 @@ class CarController extends Controller
         $cars = Car::all();
         foreach ($cars as $car) {
             # code...
-            $car->categorie_id = $car->categorie();
+            try {
+                //code...
+                $car->categorie_id = $car->categorie->nom;
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
         }
         $categories = Categorie::all();
         return Inertia::render('Showroom', ['cars' => $cars, 'categories' => $categories]);
