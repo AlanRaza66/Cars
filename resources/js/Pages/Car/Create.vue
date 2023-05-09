@@ -10,6 +10,7 @@ const form = useForm({
     marque: "",
     modele: "",
     cover: null,
+    puissance: null,
     prix: 0,
     diesel: false,
     neuf: true,
@@ -32,9 +33,14 @@ const submit = () => {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div
+                    class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex items-center justify-center"
+                >
                     <div class="p-6 text-gray-900">
-                        <form @submit.prevent="submit" enctype="multipart/form-data">
+                        <form
+                            @submit.prevent="submit"
+                            enctype="multipart/form-data"
+                        >
                             <div class="my-3">
                                 <InputLabel for="marque" value="Marque" />
 
@@ -87,6 +93,90 @@ const submit = () => {
                                 />
                             </div>
                             <div class="my-3">
+                                <InputLabel for="puissance" value="Puissance en CV" />
+
+                                <TextInput
+                                    id="puissance"
+                                    type="number"
+                                    class="mt-1 block w-full"
+                                    v-model="form.puissance"
+                                    min="0"
+                                    required
+                                    autofocus
+                                />
+
+                                <InputError
+                                    class="mt-2"
+                                    :message="form.errors.prix"
+                                />
+                            </div>
+                            <div class="my-3 flex flex-wrap">
+                                <InputLabel
+                                    for="etat"
+                                    value="Etat"
+                                    class="w-full"
+                                />
+                                <div
+                                    class="flex mx-3 items-center justify-center"
+                                >
+                                    <input
+                                        type="radio"
+                                        :value="true"
+                                        v-model="form.neuf"
+                                        id="neuf"
+                                        name="etat"
+                                    /><label for="neuf" class="mx-2"
+                                        >Neuf</label
+                                    >
+                                </div>
+                                <div
+                                    class="flex mx-3 items-center justify-center"
+                                >
+                                    <input
+                                        type="radio"
+                                        :value="false"
+                                        v-model="form.neuf"
+                                        id="occasion"
+                                        name="etat"
+                                    /><label for="occasion" class="mx-2"
+                                        >Occasion</label
+                                    >
+                                </div>
+                            </div>
+                            <div class="my-3 flex flex-wrap">
+                                <InputLabel
+                                    for="carburant"
+                                    value="Carburant"
+                                    class="w-full"
+                                />
+                                <div
+                                    class="flex mx-3 items-center justify-center"
+                                >
+                                    <input
+                                        type="radio"
+                                        :value="false"
+                                        v-model="form.diesel"
+                                        id="essence"
+                                        name="carburant"
+                                    /><label for="essence" class="mx-2"
+                                        >Essence</label
+                                    >
+                                </div>
+                                <div
+                                    class="flex mx-3 items-center justify-center"
+                                >
+                                    <input
+                                        type="radio"
+                                        :value="true"
+                                        v-model="form.diesel"
+                                        id="gasoil"
+                                        name="carburant"
+                                    /><label for="gasoil" class="mx-2"
+                                        >Gasoil</label
+                                    >
+                                </div>
+                            </div>
+                            <div class="my-3">
                                 <InputLabel for="prix" value="Prix en MGA" />
 
                                 <TextInput
@@ -104,7 +194,6 @@ const submit = () => {
                                     :message="form.errors.prix"
                                 />
                             </div>
-                            
                             <PrimaryButton
                                 class="ml-4 my-3"
                                 :class="{ 'opacity-25': form.processing }"
@@ -119,3 +208,9 @@ const submit = () => {
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style scoped>
+form {
+    width: 500px;
+}
+</style>

@@ -1,29 +1,49 @@
 <script setup>
 import LearnMoreButton from "@/Components/LearnMoreButton.vue";
 import GuestLayoutVue from "@/Layouts/GuestLayout.vue";
-import { ref, computed } from "vue";
+import { ref, reactive, computed } from "vue";
 const props = defineProps({
     cars: { type: Object },
     categories: { type: Object },
 });
-const picked = ref("Toutes");
-const choice = ref(null);
-const diesel = ref(false);
-const neuf = ref(null);
-const marque = ref("");
-const modele = ref("");
+//const picked = ref("Toutes");
+const filtres = reactive({
+    car: "",
+    picked: "Toutes",
+    diesel: false,
+    neuf: true,
+});
+const car = ref("");
+
 const filteredCars = computed(() => {
-    if (picked.value == "Toutes") {
-        return props.cars;
-    } else {
-        return props.cars.filter((car) => car.categorie_id == picked.value);
-    }
+    return props.cars.filter((car) => {
+        //Filter by categories
+        if (
+            filtres.picked.toLowerCase() != "toutes" &&
+            filtres.picked.toLocaleLowerCase() != car.categorie_id.toLowerCase()
+        ) {
+            return false;
+        }
+        //Filter by name or model
+        if (
+            filtres.car !== "" &&
+            !car.marque.toLowerCase().includes(filtres.car.toLowerCase())
+        ) {
+            if (
+                filtres.car !== "" &&
+                !car.modele.toLowerCase().includes(filtres.car.toLowerCase())
+            ) {
+                return false;
+            }
+        }
+        return true;
+    });
 });
 const separator = (value) => {
     var valueStr = String(value);
     var parts = valueStr.split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    return parts.join(".")
+    return parts.join(".");
 };
 </script>
 <template>
@@ -35,13 +55,23 @@ const separator = (value) => {
                 <div class="w-full px-8 py-4 bg-slate-800">
                     <h3 class="font-thin text-xl text-white">Filtres</h3>
                 </div>
+                <div class="w-full px-8 py-4 relative flex flex-wrap">
+                    <label for="car" class="font-bold"> Rechercher une voiture :</label>
+                    <input
+                        type="text"
+                        class="w-full"
+                        name="car"
+                        id="car"
+                        v-model="filtres.car"
+                    />
+                </div>
             </div>
             <div class="showroom">
                 <nav class="flex flex-wrap justify-start fixed z-40">
                     <div
                         class="categorie-button cursor-pointer font-thin text-xl hover:bg-slate-400 hover:text-slate-800"
                         :class="
-                            picked == 'Toutes'
+                            filtres.picked == 'Toutes'
                                 ? 'bg-slate-400 text-slate-800'
                                 : 'bg-slate-900 text-slate-400'
                         "
@@ -56,7 +86,7 @@ const separator = (value) => {
                             id="all"
                             name="categories"
                             value="Toutes"
-                            v-model="picked"
+                            v-model="filtres.picked"
                         />
                     </div>
                     <div
@@ -64,7 +94,7 @@ const separator = (value) => {
                         v-for="categorie in categories"
                         :key="categorie.id"
                         :class="
-                            picked == categorie.nom
+                            filtres.picked == categorie.nom
                                 ? 'bg-slate-400 text-slate-800'
                                 : 'bg-slate-900 text-slate-400'
                         "
@@ -79,7 +109,7 @@ const separator = (value) => {
                             :id="categorie.nom"
                             :value="categorie.nom"
                             name="categories"
-                            v-model="picked"
+                            v-model="filtres.picked"
                         />
                     </div>
                 </nav>
@@ -91,15 +121,15 @@ const separator = (value) => {
                                 :alt="car.marque + ' ' + car.modele"
                                 class="w-full h-full object-cover"
                             />
-                            <div class="name absolute w-full z-30 text-center text-slate-800">
+                            <div
+                                class="name absolute w-full z-30 text-center text-slate-800"
+                            >
                                 <h6
-                                    class=" uppercase font-thin px-4 py-2 w-full bg-white"
+                                    class="uppercase font-thin px-4 py-2 w-full bg-white"
                                 >
                                     {{ car.marque + " " + car.modele }}
                                 </h6>
-                                <ul
-                                    class=" px-6 text-left flex flex-wrap"
-                                >
+                                <ul class="px-6 text-left flex flex-wrap">
                                     <li class="w-full p-3">
                                         <p
                                             class="text-lg text-justify"
@@ -120,7 +150,7 @@ const separator = (value) => {
                                             <span class="font-bold"
                                                 >Catégorie :</span
                                             >
-                                            {{ car.categorie_id }}
+                                            {{ car.categorie_id ? car.categorie_id : 'Non répertoriée'}}
                                         </h6>
                                     </li>
                                     <li class="w-1/2" v-if="car.puissance">
@@ -145,15 +175,19 @@ const separator = (value) => {
                                     </li>
                                     <li class="w-1/2">
                                         <h6 class="p-2">
-                                            <span class="font-bold">Etat :</span>
+                                            <span class="font-bold"
+                                                >Etat :</span
+                                            >
                                             {{
-                                                car.neuf ? "Neuve" : "Occasion"
+                                                car.neuf ? "Neuf" : "Occasion"
                                             }}
                                         </h6>
                                     </li>
                                     <li class="w-1/2">
                                         <h6 class="p-2">
-                                            <span class="font-bold">Prix :</span>
+                                            <span class="font-bold"
+                                                >Prix :</span
+                                            >
                                             {{ separator(car.prix) }} MGA
                                         </h6>
                                     </li>
@@ -175,7 +209,7 @@ const separator = (value) => {
 main {
     padding-top: 100px;
 }
-input {
+nav input {
     display: none;
 }
 .filter-container {
@@ -226,7 +260,7 @@ input {
 }
 .show .car:hover .car-info .name {
     transform: translateY(0);
-    background-color: rgba(255, 255, 255, 0.681);
+    background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(3px);
 }
 
