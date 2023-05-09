@@ -1,4 +1,5 @@
 <script setup>
+import LearnMoreButton from "@/Components/LearnMoreButton.vue";
 import GuestLayoutVue from "@/Layouts/GuestLayout.vue";
 import { ref, computed } from "vue";
 const props = defineProps({
@@ -18,6 +19,12 @@ const filteredCars = computed(() => {
         return props.cars.filter((car) => car.categorie_id == picked.value);
     }
 });
+const separator = (value) => {
+    var valueStr = String(value);
+    var parts = valueStr.split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return parts.join(".")
+};
 </script>
 <template>
     <GuestLayoutVue>
@@ -84,22 +91,85 @@ const filteredCars = computed(() => {
                                 :alt="car.marque + ' ' + car.modele"
                                 class="w-full h-full object-cover"
                             />
-                            <div class="name absolute w-full z-30 text-center">
+                            <div class="name absolute w-full z-30 text-center text-slate-800">
                                 <h6
-                                    class="text-white uppercase font-thin px-4 py-2 w-full bg-slate-800"
+                                    class=" uppercase font-thin px-4 py-2 w-full bg-white"
                                 >
                                     {{ car.marque + " " + car.modele }}
                                 </h6>
-                                <ul class="text-white px-4 text-left">
-                                    
+                                <ul
+                                    class=" px-6 text-left flex flex-wrap"
+                                >
+                                    <li class="w-full p-3">
+                                        <p
+                                            class="text-lg text-justify"
+                                            v-if="car.about"
+                                        >
+                                            {{ car.about }}
+                                        </p>
+                                        <p class="text-sm text-justify" v-else>
+                                            Lorem, ipsum dolor sit amet
+                                            consectetur adipisicing elit.
+                                            Dolores optio hic aliquid repellat
+                                            totam corporis commodi, in adipisci
+                                            iste beatae a distinctio ullam quod
+                                        </p>
+                                    </li>
+                                    <li class="w-1/2">
+                                        <h6 class="p-2">
+                                            <span class="font-bold"
+                                                >Catégorie :</span
+                                            >
+                                            {{ car.categorie_id }}
+                                        </h6>
+                                    </li>
+                                    <li class="w-1/2" v-if="car.puissance">
+                                        <h6 class="p-2">
+                                            <span class="font-bold"
+                                                >Puissance :</span
+                                            >
+                                            {{ car.categorie_id }}
+                                        </h6>
+                                    </li>
+                                    <li class="w-1/2">
+                                        <h6 class="p-2">
+                                            <span class="font-bold"
+                                                >Carburant :</span
+                                            >
+                                            {{
+                                                car.diesel
+                                                    ? "Gasoil"
+                                                    : "Essence"
+                                            }}
+                                        </h6>
+                                    </li>
+                                    <li class="w-1/2">
+                                        <h6 class="p-2">
+                                            <span class="font-bold">Etat :</span>
+                                            {{
+                                                car.neuf ? "Neuve" : "Occasion"
+                                            }}
+                                        </h6>
+                                    </li>
+                                    <li class="w-1/2">
+                                        <h6 class="p-2">
+                                            <span class="font-bold">Prix :</span>
+                                            {{ separator(car.prix) }} MGA
+                                        </h6>
+                                    </li>
+                                    <li class="w-1/2">
+                                        <LearnMoreButton
+                                            :label="`Voir`"
+                                            :link="'#'"
+                                        />
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </main></GuestLayoutVue
-    >
+            </div></main
+    ></GuestLayoutVue>
 </template>
 <style scoped>
 main {
@@ -151,12 +221,12 @@ input {
 .show .car .car-info .name {
     top: 0;
     height: 100%;
-    transform: translateY(calc(100% - 2.5rem));
+    transform: translateY(calc(100% - 2.2rem));
     transition: 500ms ease-out;
 }
 .show .car:hover .car-info .name {
     transform: translateY(0);
-    background-color: rgba(30, 41, 59, 0.681);
+    background-color: rgba(255, 255, 255, 0.681);
     backdrop-filter: blur(3px);
 }
 
