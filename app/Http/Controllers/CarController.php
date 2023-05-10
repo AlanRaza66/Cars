@@ -42,6 +42,12 @@ class CarController extends Controller
         return Inertia::render('Showroom', ['cars' => $cars, 'categories' => $categories]);
     }
 
+    public function pick($id)
+    {
+        $car = Car::find($id);
+        return Inertia::render('Showroom/Profile', ['car' => $car]);
+    }
+
     public function create()
     {
         $cats = Categorie::all();
@@ -58,6 +64,7 @@ class CarController extends Controller
             'marque' => $request->input('marque'),
             'modele' => $request->input('modele'),
             'prix' => $request->input('prix'),
+            'puissance' => $request->input('puissance'),
             'diesel' => $request->input('diesel'),
             'neuf' => $request->input('neuf'),
             'cover' => $imagePath,

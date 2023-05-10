@@ -20,8 +20,9 @@ use Inertia\Inertia;
 
 Route::get('/', [CarController::class, 'preface'])->name('home');
 
-Route::prefix('/showroom')->name('showroom.')->controller(CarController::class)->group(function () {
+Route::prefix('/showroom')->name('showroom.')->controller(CarController::class)->group(function ($id) {
     Route::get('/', 'index')->name('index');
+    Route::get('/{id}','pick')->name('car');
 });
 
 Route::get('/dashboard', function () {

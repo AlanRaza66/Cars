@@ -59,7 +59,7 @@ const enter = (el) => {
                             :label="`Découvrir ${
                                 activeSlide.marque + ' ' + activeSlide.modele
                             }`"
-                            link="#"
+                            :link="`/showroom/${activeSlide.id}`"
                         />
                     </div></div
             ></transition>
@@ -122,7 +122,7 @@ const enter = (el) => {
                             :label="`Découvrir ${
                                 slide.marque + ' ' + slide.modele
                             }`"
-                            link="#"
+                            :link="`/showroom/${slide.id}`"
                         />
                     </div>
                 </div>
@@ -155,7 +155,7 @@ const enter = (el) => {
                                 ' ' +
                                 props.cars[0].modele
                             }`"
-                            link="#"
+                            :link="`/showroom/${props.cars[0].id}`"
                         />
                     </div>
                 </div>
@@ -232,7 +232,7 @@ const enter = (el) => {
                 </p>
                 <LearnMoreButton
                     :label="`Découvrir ${car[0].marque + ' ' + car[0].modele}`"
-                    link="#"
+                    :link="`/showroom/${car[0].id}`"
                 />
             </div>
         </div>
@@ -261,7 +261,7 @@ const enter = (el) => {
                         :label="`Découvrir ${
                             car[1].marque + ' ' + car[1].modele
                         }`"
-                        link="#"
+                        :link="`/showroom/${cars[1].id}`"
                     />
                 </div>
             </div>
@@ -289,7 +289,7 @@ const enter = (el) => {
                         :label="`Découvrir ${
                             car[2].marque + ' ' + car[2].modele
                         }`"
-                        link="#"
+                        :link="`/showroom/${cars[2].id}`"
                     />
                 </div>
             </div>
@@ -311,7 +311,7 @@ const enter = (el) => {
                 </p>
                 <LearnMoreButton
                     :label="`Découvrir ${car[3].marque + ' ' + car[3].modele}`"
-                    link="#"
+                    :link="`/showroom/${cars[3].id}`"
                 />
             </div>
         </div>
@@ -341,10 +341,9 @@ const enter = (el) => {
 }
 
 .info {
-    top: 50%;
+    top: 200px;
     left: 150px;
     width: 50%;
-    transform: translateY(-50%);
 }
 
 .landing {
@@ -430,6 +429,12 @@ const enter = (el) => {
 .car .info2 {
     top: 50%;
     transform: translateY(-50%);
+}
+@media screen and (max-width: 1024px) {
+    .slide {
+    width: 200px;
+    height: 225px;
+}
 }
 @media screen and (max-width: 992px) {
     .hero {
