@@ -57,7 +57,7 @@ window.addEventListener("scroll", () => {
         >
             <Link
                 :href="route('home')"
-                :class="` text-4xl  mt-8 font-thin uppercase ${
+                :class="` text-2xl  mt-8 font-thin uppercase ${
                     $page.url == '/' ? 'active' : ''
                 }`"
                 @click="activeBurger = false"
@@ -65,7 +65,7 @@ window.addEventListener("scroll", () => {
             >
             <Link
                 :href="route('showroom.index')"
-                :class="`text-4xl mt-8 font-thin uppercase ${
+                :class="`text-2xl mt-8 font-thin uppercase ${
                     $page.url.startsWith('/showroom') ? 'active' : ''
                 }`"
                 @click="activeBurger = false"
@@ -141,8 +141,8 @@ a.active::before {
         color: #fff;
     }
     nav {
-        padding-left: 50px !important;
-        padding-right: 50px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
     }
     nav .logo a {
         font-size: 2.25rem;

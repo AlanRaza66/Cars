@@ -17,7 +17,8 @@ const filtres = reactive({
     prix: 1000000000,
 });
 const car = ref("");
-
+const openFilter = ref(false);
+const details = ref(false);
 const filteredCars = computed(() => {
     return props.cars.filter((car) => {
         //Filter by categories
@@ -72,11 +73,20 @@ const separator = (value) => {
         <Head title="Showroom" />
 
         <main class="w-full min-h-screen flex flex-wrap">
-            <div class="filter-container overflow-auto">
-                <div class="w-full px-8 py-4 bg-slate-800">
+            <div
+                class="filter-container overflow-auto"
+                :class="openFilter ? 'active' : ''"
+            >
+                <div
+                    class="w-full px-8 py-4 bg-slate-800 flex justify-between items-center fixed z-30"
+                >
                     <h3 class="font-thin text-xl text-white">Filtres</h3>
+                    <div
+                        class="activator bg-white h-6 w-6 cursor-pointer hidden items-center justify-center"
+                        @click="openFilter = !openFilter"
+                    ><p class="text-2xl">!</p></div>
                 </div>
-                <nav class="flex-wrap justify-start hidden">
+                <nav class="flex-wrap justify-center hidden">
                     <div
                         class="categorie-button cursor-pointer font-thin text-xl hover:bg-slate-400 hover:text-slate-800"
                         :class="
@@ -87,7 +97,7 @@ const separator = (value) => {
                     >
                         <label
                             for="all"
-                            class="inline-block cursor-pointer px-8 py-4"
+                            class="inline-block cursor-pointer px-4 py-2"
                             >Toutes</label
                         >
                         <input
@@ -109,7 +119,7 @@ const separator = (value) => {
                         "
                     >
                         <label
-                            class="cursor-pointer px-8 py-4 inline-block"
+                            class="cursor-pointer px-4 py-2 inline-block"
                             :for="categorie.nom"
                             >{{ categorie.nom }}</label
                         >
@@ -305,17 +315,19 @@ const separator = (value) => {
                                 class="w-full h-full object-cover"
                             />
                             <div
-                                class="name absolute w-full z-30 text-center text-slate-800"
+                                class="name absolute w-full z-30 text-center text-slate-800 overflow-auto"
+                                :class="details ? 'showDetails' : ''"
                             >
                                 <h6
                                     class="uppercase font-thin px-4 py-2 w-full bg-white"
+                                    @click="details != details"
                                 >
                                     {{ car.marque + " " + car.modele }}
                                 </h6>
                                 <ul class="px-6 text-left flex flex-wrap">
-                                    <li class="w-full p-3">
+                                    <li class="w-full p-1">
                                         <p
-                                            class="text-lg text-justify"
+                                            class="text-justify"
                                             v-if="car.about"
                                         >
                                             {{ car.about }}
@@ -329,7 +341,7 @@ const separator = (value) => {
                                         </p>
                                     </li>
                                     <li class="w-1/2">
-                                        <h6 class="p-2">
+                                        <h6 class="p-1">
                                             <span class="font-bold"
                                                 >Catégorie :</span
                                             >
@@ -341,7 +353,7 @@ const separator = (value) => {
                                         </h6>
                                     </li>
                                     <li class="w-1/2" v-if="car.puissance">
-                                        <h6 class="p-2">
+                                        <h6 class="p-1">
                                             <span class="font-bold"
                                                 >Puissance :</span
                                             >
@@ -349,7 +361,7 @@ const separator = (value) => {
                                         </h6>
                                     </li>
                                     <li class="w-1/2">
-                                        <h6 class="p-2">
+                                        <h6 class="p-1">
                                             <span class="font-bold"
                                                 >Carburant :</span
                                             >
@@ -397,7 +409,7 @@ main {
     padding-top: 100px;
 }
 nav {
-    background-color: #ffffff72;
+    background-color: #ffffff;
     backdrop-filter: blur(4px);
 }
 nav input {
@@ -429,6 +441,10 @@ nav input {
     align-items: start;
     flex-wrap: wrap;
 }
+.show .car .car-info .name ul li p, .show .car .car-info .name ul li h6{
+        font-size: small;
+    }
+
 .show .car {
     height: 250px;
     width: calc(100% / 2);
@@ -472,6 +488,10 @@ nav input {
     }
 }
 @media screen and (max-width: 992px) {
+    .show {
+        padding: 20px 10px;
+        padding-top: 70px;
+    }
     .show .car {
         height: 300px;
         width: calc(50%);
@@ -480,21 +500,36 @@ nav input {
         width: 100%;
         height: auto;
     }
-    .showroom nav{
+   
+    .showroom nav {
         display: none;
+    }
+    .name.showDetails {
+        transform: translateY(0);
     }
     .filter-container {
         width: 100%;
-        height: auto;
-        /*position: fixed;*/
+        height: 57px;
+        overflow: hidden;
+        position: fixed;
         background-color: #fff;
+        transition: 500ms ease-in-out;
         z-index: 40;
     }
-    .filter-container nav{
+    .filter-container.active {
+        height: calc(100vh - 100px);
+        overflow: scroll;
+    }
+    .filter-container .activator {
         display: flex;
+        border-radius: 50%;
+    }
+    .filter-container nav {
+        display: flex;
+        padding-top: 60px;
     }
 }
-@media screen and (max-width:728px) {
+@media screen and (max-width: 728px) {
     .show .car {
         width: calc(100%);
     }
