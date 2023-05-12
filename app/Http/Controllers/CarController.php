@@ -45,6 +45,12 @@ class CarController extends Controller
     public function pick($id)
     {
         $car = Car::find($id);
+        try {
+            //code...
+            $car->categorie_id = $car->categorie->nom;
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         return Inertia::render('Showroom/Profile', ['car' => $car]);
     }
 

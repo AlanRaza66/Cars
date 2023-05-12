@@ -261,7 +261,7 @@ const enter = (el) => {
                         :label="`Découvrir ${
                             car[1].marque + ' ' + car[1].modele
                         }`"
-                        :link="`/showroom/${cars[1].id}`"
+                        :link="`/showroom/${car[1].id}`"
                     />
                 </div>
             </div>
@@ -289,7 +289,7 @@ const enter = (el) => {
                         :label="`Découvrir ${
                             car[2].marque + ' ' + car[2].modele
                         }`"
-                        :link="`/showroom/${cars[2].id}`"
+                        :link="`/showroom/${car[2].id}`"
                     />
                 </div>
             </div>
@@ -311,7 +311,7 @@ const enter = (el) => {
                 </p>
                 <LearnMoreButton
                     :label="`Découvrir ${car[3].marque + ' ' + car[3].modele}`"
-                    :link="`/showroom/${cars[3].id}`"
+                    :link="`/showroom/${car[3].id}`"
                 />
             </div>
         </div>
