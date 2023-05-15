@@ -1,6 +1,6 @@
 <script setup>
 import GuestLayoutVue from "@/Layouts/GuestLayout.vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, Head } from "@inertiajs/vue3";
 defineProps({
     car: { type: Object },
 });
@@ -12,6 +12,7 @@ const separator = (value) => {
 };
 </script>
 <template>
+    <Head :title="car.marque + ' ' + car.modele"/>
     <GuestLayoutVue>
         <main class="min-h-screen w-full">
             <div
@@ -26,7 +27,7 @@ const separator = (value) => {
                 }}</Link>
             </div>
             <div class="hero w-full">
-                <div class="w-full h-full flex flex-wrap gap-x-3">
+                <div class="w-full h-full flex flex-wrap gap-x-3 groupe">
                     <div class="images bg-white">
                         <img
                             :src="`/storage/${car.cover}`"
@@ -127,11 +128,11 @@ const separator = (value) => {
                                     <div
                                         class="w-full flex items-center justify-center p-2"
                                     >
-                                        <Link
+                                        <a
                                             class="px-5 py-3 button text-xl text-white bg-slate-700 hover:bg-slate-500 transition-all"
-                                            :href="`/showroom/${car.id}`"
+                                            href="mailto:alanraza66@gmail.com"
                                             >Prendre rendez-vous pour
-                                            achat</Link
+                                            achat</a
                                         >
                                     </div>
                                 </li>
@@ -187,6 +188,10 @@ main {
 }
 
 @media screen and (max-width:992px) {
+    .groupe{
+        row-gap: 0.75rem;
+        column-gap: 0;
+    }
     .images, .fiche{
         width: 100%!important;
         height: auto;
