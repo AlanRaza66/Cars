@@ -31,7 +31,7 @@ const filteredCars = computed(() => {
         //Filter by name or model
         if (
             filtres.car !== "" &&
-            !car.marque.toLowerCase().includes(filtres.car.toLowerCase())
+            !car.marque.nom.toLowerCase().includes(filtres.car.toLowerCase())
         ) {
             if (
                 filtres.car !== "" &&
@@ -132,7 +132,7 @@ const separator = (value) => {
                         />
                     </div>
                 </nav>
-                <div class="w-full px-8 py-4 relative flex flex-wrap">
+                <div class="w-full px-8 py-4 mt-12 relative flex flex-wrap">
                     <label for="car" class="font-bold">
                         Rechercher une voiture :</label
                     >
@@ -144,7 +144,7 @@ const separator = (value) => {
                         v-model="filtres.car"
                     />
                 </div>
-                <div class="w-full px-8 py-4 relative flex flex-wrap">
+                <div class="w-full px-8 py-8 relative flex flex-wrap">
                     <InputLabel
                         for="carburant"
                         value="Carburant"
