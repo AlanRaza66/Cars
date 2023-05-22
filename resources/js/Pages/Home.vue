@@ -43,11 +43,11 @@ const enter = (el) => {
                     <img
                         class="w-full h-full object-cover object-center absolute top-0 left-0"
                         :src="`/storage/${activeSlide.cover}`"
-                        :alt="activeSlide.marque + ' ' + activeSlide.modele"
+                        :alt="activeSlide.marque_id + ' ' + activeSlide.modele"
                     />
                     <div class="text-white absolute z-20 info">
                         <h1 class="text-6xl font-extrabold uppercase">
-                            {{ activeSlide.marque + " " + activeSlide.modele }}
+                            {{ activeSlide.marque_id + " " + activeSlide.modele }}
                         </h1>
                         <p class="text-xl">
                             Lorem, ipsum dolor sit amet consectetur adipisicing
@@ -57,7 +57,7 @@ const enter = (el) => {
                         </p>
                         <LearnMoreButton
                             :label="`Découvrir ${
-                                activeSlide.marque + ' ' + activeSlide.modele
+                                activeSlide.marque_id + ' ' + activeSlide.modele
                             }`"
                             :link="`/showroom/${activeSlide.id}`"
                         />
@@ -74,7 +74,7 @@ const enter = (el) => {
                     <img
                         class="h-full object-cover"
                         :src="`/storage/${slide.cover}`"
-                        :alt="slide.marque + ' ' + slide.modele"
+                        :alt="slide.marque_id + ' ' + slide.modele"
                     />
                     <div
                         class="mask2 z-10 w-full h-full absolute top-0 left-0"
@@ -83,7 +83,7 @@ const enter = (el) => {
                         class="text-slide z-20 text-white absolute bottom-3 left-3"
                     >
                         <h1 class="text-xl font-extrabold uppercase">
-                            {{ slide.marque + " " + slide.modele }}
+                            {{ slide.marque_id + " " + slide.modele }}
                         </h1>
                         <p class="">
                             Lorem, ipsum dolor sit amet consectetur adipisicing
@@ -106,11 +106,11 @@ const enter = (el) => {
                     <img
                         class="h-full w-full object-cover"
                         :src="`/storage/${slide.cover}`"
-                        :alt="slide.marque + ' ' + slide.modele"
+                        :alt="slide.marque_id + ' ' + slide.modele"
                     />
                     <div class="text-slide-mobile">
                         <h1 class="text-4xl font-extrabold uppercase">
-                            {{ slide.marque + " " + slide.modele }}
+                            {{ slide.marque_id + " " + slide.modele }}
                         </h1>
                         <p class="text-xl">
                             Lorem, ipsum dolor sit amet consectetur adipisicing
@@ -120,7 +120,7 @@ const enter = (el) => {
                         </p>
                         <LearnMoreButton
                             :label="`Découvrir ${
-                                slide.marque + ' ' + slide.modele
+                                slide.marque_id + ' ' + slide.modele
                             }`"
                             :link="`/showroom/${slide.id}`"
                         />
@@ -133,12 +133,12 @@ const enter = (el) => {
                     <img
                         class="h-full w-full object-cover"
                         :src="`/storage/${props.cars[0].cover}`"
-                        :alt="props.cars[0].marque + ' ' + props.cars[0].modele"
+                        :alt="props.cars[0].marque_id + ' ' + props.cars[0].modele"
                     />
                     <div class="text-slide-mobile">
                         <h1 class="text-4xl font-extrabold uppercase">
                             {{
-                                props.cars[0].marque +
+                                props.cars[0].marque_id +
                                 " " +
                                 props.cars[0].modele
                             }}
@@ -151,7 +151,7 @@ const enter = (el) => {
                         </p>
                         <LearnMoreButton
                             :label="`Découvrir ${
-                                props.cars[0].marque +
+                                props.cars[0].marque_id +
                                 ' ' +
                                 props.cars[0].modele
                             }`"
@@ -222,7 +222,7 @@ const enter = (el) => {
             <div class="w-full h-full absolute top-0 left-0 mask z-10"></div>
             <div class="text-white absolute z-20 info">
                 <h3 class="text-6xl font-extrabold uppercase">
-                    {{ car[0].marque + " " + car[0].modele }}
+                    {{ car[0].marque_id + " " + car[0].modele }}
                 </h3>
                 <p class="text-xl">
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit.
@@ -231,7 +231,7 @@ const enter = (el) => {
                     fugit.
                 </p>
                 <LearnMoreButton
-                    :label="`Découvrir ${car[0].marque + ' ' + car[0].modele}`"
+                    :label="`Découvrir ${car[0].marque_id + ' ' + car[0].modele}`"
                     :link="`/showroom/${car[0].id}`"
                 />
             </div>
@@ -249,7 +249,7 @@ const enter = (el) => {
                     id="first"
                 >
                     <h3 class="text-4xl font-extrabold uppercase">
-                        {{ car[1].marque + " " + car[1].modele }}
+                        {{ car[1].marque_id + " " + car[1].modele }}
                     </h3>
                     <p class="text-xl">
                         Lorem, ipsum dolor sit amet consectetur adipisicing
@@ -259,7 +259,7 @@ const enter = (el) => {
                     </p>
                     <LearnMoreButton
                         :label="`Découvrir ${
-                            car[1].marque + ' ' + car[1].modele
+                            car[1].marque_id + ' ' + car[1].modele
                         }`"
                         :link="`/showroom/${car[1].id}`"
                     />
@@ -277,7 +277,7 @@ const enter = (el) => {
                     id="second"
                 >
                     <h3 class="text-4xl font-extrabold uppercase">
-                        {{ car[2].marque + " " + car[2].modele }}
+                        {{ car[2].marque_id + " " + car[2].modele }}
                     </h3>
                     <p class="text-xl">
                         Lorem, ipsum dolor sit amet consectetur adipisicing
@@ -287,7 +287,7 @@ const enter = (el) => {
                     </p>
                     <LearnMoreButton
                         :label="`Découvrir ${
-                            car[2].marque + ' ' + car[2].modele
+                            car[2].marque_id + ' ' + car[2].modele
                         }`"
                         :link="`/showroom/${car[2].id}`"
                     />
@@ -301,7 +301,7 @@ const enter = (el) => {
             <div class="w-full h-full absolute top-0 left-0 mask z-10"></div>
             <div class="text-white absolute z-20 info">
                 <h3 class="text-6xl font-extrabold uppercase">
-                    {{ car[3].marque + " " + car[3].modele }}
+                    {{ car[3].marque_id + " " + car[3].modele }}
                 </h3>
                 <p class="text-xl">
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit.
@@ -310,7 +310,7 @@ const enter = (el) => {
                     fugit.
                 </p>
                 <LearnMoreButton
-                    :label="`Découvrir ${car[3].marque + ' ' + car[3].modele}`"
+                    :label="`Découvrir ${car[3].marque_id + ' ' + car[3].modele}`"
                     :link="`/showroom/${car[3].id}`"
                 />
             </div>

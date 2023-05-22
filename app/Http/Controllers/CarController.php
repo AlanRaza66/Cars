@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Models\Categorie;
+use App\Models\Marque;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
@@ -15,8 +16,28 @@ class CarController extends Controller
     public function preface()
     {
         $cars = Car::take(4)->get();
+        foreach ($cars as $c) {
+            # code...
+            try {
+                //code...
+                $c->marque_id = $c->marque->nom;
+                $c->categorie_id = $c->categorie->nom;
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
         $categories = Categorie::all();
         $car = Car::inRandomOrder()->take(4)->get();
+        foreach ($car as $c) {
+            # code...
+            try {
+                //code...
+                $c->marque_id = $c->marque->nom;
+                $c->categorie_id = $c->categorie->nom;
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
         return Inertia::render('Home', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
@@ -33,6 +54,7 @@ class CarController extends Controller
             # code...
             try {
                 //code...
+                $car->marque_id = $car->marque->nom;
                 $car->categorie_id = $car->categorie->nom;
             } catch (\Throwable $th) {
                 //throw $th;
@@ -47,6 +69,7 @@ class CarController extends Controller
         $car = Car::find($id);
         try {
             //code...
+            $car->marque_id = $car->marque->nom;
             $car->categorie_id = $car->categorie->nom;
         } catch (\Throwable $th) {
             //throw $th;
@@ -56,8 +79,9 @@ class CarController extends Controller
 
     public function create()
     {
+        $marques = Marque::all();
         $cats = Categorie::all();
-        return Inertia::render('Car/Create', ['categories' => $cats]);
+        return Inertia::render('Car/Create', ['categories' => $cats, 'marques' => $marques]);
     }
 
     public function store(Request $request)
@@ -67,7 +91,7 @@ class CarController extends Controller
         $image = $request->file('cover');
         $imagePath = $image->store('cars/cover', 'public');
         Car::create([
-            'marque' => $request->input('marque'),
+            'marque_id' => $request->input('marque'),
             'modele' => $request->input('modele'),
             'prix' => $request->input('prix'),
             'puissance' => $request->input('puissance'),

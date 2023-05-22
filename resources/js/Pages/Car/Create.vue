@@ -5,9 +5,10 @@ import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 const form = useForm({
-    marque: "",
+    marque: null,
     modele: "",
     cover: null,
     puissance: null,
@@ -15,6 +16,10 @@ const form = useForm({
     diesel: false,
     neuf: true,
     categorie_id: null,
+});
+defineProps({
+    categories: { type: Object },
+    marques: { type: Object },
 });
 
 const submit = () => {
@@ -44,19 +49,20 @@ const submit = () => {
                             <div class="my-3">
                                 <InputLabel for="marque" value="Marque" />
 
-                                <TextInput
+                                <select
+                                    class="mt-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                    name="marque"
                                     id="marque"
-                                    type="text"
-                                    class="mt-1 block w-full"
                                     v-model="form.marque"
                                     required
-                                    autofocus
-                                />
-
-                                <InputError
-                                    class="mt-2"
-                                    :message="form.errors.marque"
-                                />
+                                >
+                                    <option
+                                        v-for="marque in marques"
+                                        :value="marque.id"
+                                    >
+                                        {{ marque.nom }}
+                                    </option>
+                                </select>
                             </div>
                             <div class="my-3">
                                 <InputLabel for="modele" value="Modèle" />
@@ -93,7 +99,26 @@ const submit = () => {
                                 />
                             </div>
                             <div class="my-3">
-                                <InputLabel for="puissance" value="Puissance en CV" />
+                                <InputLabel for="cat" value="Catégorie" />
+                                <select
+                                    class="mt-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                    name="catégorie"
+                                    id="cat"
+                                    v-model="form.categorie_id"
+                                >
+                                    <option
+                                        v-for="categorie in categories"
+                                        :value="categorie.id"
+                                    >
+                                        {{ categorie.nom }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="my-3">
+                                <InputLabel
+                                    for="puissance"
+                                    value="Puissance en CV"
+                                />
 
                                 <TextInput
                                     id="puissance"
@@ -112,12 +137,13 @@ const submit = () => {
                             </div>
                             <div class="my-3 flex flex-wrap">
                                 <InputLabel
-                                    for="etat"
+                                    for="etat_input"
                                     value="Etat"
                                     class="w-full"
                                 />
                                 <div
                                     class="flex mx-3 items-center justify-center"
+                                    id="etat_input"
                                 >
                                     <input
                                         type="radio"

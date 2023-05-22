@@ -311,7 +311,7 @@ const separator = (value) => {
                         <div class="car-info relative overflow-hidden">
                             <img
                                 :src="`/storage/${car.cover}`"
-                                :alt="car.marque + ' ' + car.modele"
+                                :alt="car.marque.nom + ' ' + car.modele"
                                 class="w-full h-full object-cover"
                             />
                             <div
@@ -322,7 +322,7 @@ const separator = (value) => {
                                     class="uppercase font-thin px-4 py-2 w-full bg-white"
                                     @click="details != details"
                                 >
-                                    {{ car.marque + " " + car.modele }}
+                                    {{ car.marque.nom + " " + car.modele }}
                                 </h6>
                                 <ul class="px-6 text-left flex flex-wrap">
                                     <li class="w-full p-1">
