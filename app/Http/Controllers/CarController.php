@@ -77,6 +77,39 @@ class CarController extends Controller
         return Inertia::render('Showroom/Profile', ['car' => $car]);
     }
 
+    public function indexVehicle()
+    {
+        $marques = Marque::all();
+        $cats = Categorie::all();
+        $cars = Car::all();
+        foreach ($cars as $car) {
+            # code...
+            try {
+                //code...
+                $car->marque_id = $car->marque->nom;
+                $car->categorie_id = $car->categorie->nom;
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
+        return Inertia::render('Car/Index', ['cars' => $cars, 'categories' => $cats, 'marques' => $marques]);
+    }
+
+    public function updateVehicle($id)
+    {
+        $car = Car::find($id);
+        $marques = Marque::all();
+        $cats = Categorie::all();
+        try {
+            //code...
+            $car->marque_id = $car->marque->nom;
+            $car->categorie_id = $car->categorie->nom;
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        return Inertia::render('Car/Profile', ['car' => $car, 'categories' => $cats, 'marques' => $marques]);
+    }
+
     public function create()
     {
         $marques = Marque::all();
@@ -101,6 +134,19 @@ class CarController extends Controller
             'categorie_id' => $request->input('categorie_id')
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'La voiture est maintenant disponible!');
+        return redirect()->route('dashboard.vehicle')->with('success', 'La voiture est maintenant disponible!');
+    }
+
+    public function change(Request $request)
+    {
+        $car = Car::find($request->input('id'));
+        $car->marque_id = $request->input('marque');
+        $car->modele = $request->input('modele');
+        $car->prix = $request->input('prix');
+        $car->puissance =  $request->input('puissance');
+        $car->diesel = $request->input('diesel');
+        $car->neuf = $request->input('neuf');
+        $car->save();
+        return redirect()->route('dashboard.vehicle');
     }
 }

@@ -23,7 +23,7 @@ const separator = (value) => {
                 <Link :href="route('showroom.index')">Showroom </Link>
                 <p>></p>
                 <Link :href="`/showroom/${car.id}`">{{
-                    car.marque + " " + car.modele
+                    car.marque_id + " " + car.modele
                 }}</Link>
             </div>
             <div class="hero w-full">
@@ -31,7 +31,7 @@ const separator = (value) => {
                     <div class="images bg-white">
                         <img
                             :src="`/storage/${car.cover}`"
-                            :alt="car.marque + ' ' + car.modele"
+                            :alt="car.marque_id + ' ' + car.modele"
                             class="w-full h-1/2 object-cover object-center"
                         />
                         <div class="side w-full h-1/2 flex gap-x-3">
