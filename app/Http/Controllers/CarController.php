@@ -140,13 +140,26 @@ class CarController extends Controller
     public function change(Request $request)
     {
         $car = Car::find($request->input('id'));
+
         $car->marque_id = $request->input('marque');
         $car->modele = $request->input('modele');
         $car->prix = $request->input('prix');
         $car->puissance =  $request->input('puissance');
         $car->diesel = $request->input('diesel');
         $car->neuf = $request->input('neuf');
+        if ($request->file('cover')) {
+            $image = $request->file('cover');
+            $imagePath = $image->store('cars/cover', 'public');
+            $car->cover = $imagePath;
+        }
         $car->save();
+        return redirect()->route('dashboard.vehicle');
+    }
+
+    public function delete($id)
+    {
+        $car = Car::find($id);
+        $car->delete();
         return redirect()->route('dashboard.vehicle');
     }
 }

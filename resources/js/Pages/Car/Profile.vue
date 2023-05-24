@@ -54,7 +54,9 @@ const submit = () => {
                             :alt="car.marque.nom + '' + car.modele"
                             class="w-1/2 object-cover"
                         />
-                        <div class="w-1/2 pl-6 flex flex-wrap justify-between">
+                        <div
+                            class="w-1/2 pl-6 flex flex-wrap justify-between form-container"
+                        >
                             <div class="py-6 text-gray-900 w-full">
                                 <form
                                     @submit.prevent="submit"
@@ -108,7 +110,7 @@ const submit = () => {
                                             :message="form.errors.modele"
                                         />
                                     </div>
-                                    <div class="my-3 w-1/2">
+                                    <div class="my-3 w-1/2 input">
                                         <InputLabel
                                             for="banner"
                                             value="Image"
@@ -130,7 +132,7 @@ const submit = () => {
                                             :message="form.errors.modele"
                                         />
                                     </div>
-                                    <div class="my-3 w-1/2">
+                                    <div class="my-3 w-1/2 input">
                                         <InputLabel
                                             for="cat"
                                             value="Catégorie"
@@ -172,7 +174,6 @@ const submit = () => {
                                     </div>
                                     <div class="my-3 flex flex-wrap">
                                         <InputLabel
-                                            for="etat_input"
                                             value="Etat"
                                             class="w-full"
                                         />
@@ -206,7 +207,6 @@ const submit = () => {
                                     </div>
                                     <div class="my-3 flex flex-wrap">
                                         <InputLabel
-                                            for="carburant"
                                             value="Carburant"
                                             class="w-full"
                                         />
@@ -237,7 +237,7 @@ const submit = () => {
                                             >
                                         </div>
                                     </div>
-                                    <div class="my-3">
+                                    <div class="my-3 w-1/2 input">
                                         <InputLabel
                                             for="prix"
                                             value="Prix en MGA"
@@ -258,15 +258,24 @@ const submit = () => {
                                             :message="form.errors.prix"
                                         />
                                     </div>
-                                    <PrimaryButton
-                                        class="ml-4 my-3"
-                                        :class="{
-                                            'opacity-25': form.processing,
-                                        }"
-                                        :disabled="form.processing"
-                                    >
-                                        Modifier
-                                    </PrimaryButton>
+                                    <div class="flex w-full gap-x-2">
+                                        <PrimaryButton
+                                            class="ml-4 my-3"
+                                            :class="{
+                                                'opacity-25': form.processing,
+                                            }"
+                                            :disabled="form.processing"
+                                        >
+                                            Modifier
+                                        </PrimaryButton>
+                                        <Link
+                                        :href="`/dashboard/vehicles/${car.id}`" 
+                                            method="DELETE"
+                                            class="ml-4 my-3 bg-red-600 inline-flex items-center px-4 py-2 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                                        >
+                                            Supprimer
+                                        </Link>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -279,5 +288,19 @@ const submit = () => {
 <style scoped>
 .container img {
     border-radius: 12px;
+}
+@media screen and (max-width: 992px) {
+    .fil{
+        display: none;
+    }
+    .container img {
+        width: 100%;
+    }
+    .form-container {
+        width: 100%;
+    }
+    .input {
+        width: 100%;
+    }
 }
 </style>

@@ -47,7 +47,9 @@ const enter = (el) => {
                     />
                     <div class="text-white absolute z-20 info">
                         <h1 class="text-6xl font-extrabold uppercase">
-                            {{ activeSlide.marque_id + " " + activeSlide.modele }}
+                            {{
+                                activeSlide.marque_id + " " + activeSlide.modele
+                            }}
                         </h1>
                         <p class="text-xl">
                             Lorem, ipsum dolor sit amet consectetur adipisicing
@@ -133,7 +135,9 @@ const enter = (el) => {
                     <img
                         class="h-full w-full object-cover"
                         :src="`/storage/${props.cars[0].cover}`"
-                        :alt="props.cars[0].marque_id + ' ' + props.cars[0].modele"
+                        :alt="
+                            props.cars[0].marque_id + ' ' + props.cars[0].modele
+                        "
                     />
                     <div class="text-slide-mobile">
                         <h1 class="text-4xl font-extrabold uppercase">
@@ -193,7 +197,7 @@ const enter = (el) => {
             <h2 class="w-full text-center text-6xl">
                 Trouvez le véhicule de vos rêves
             </h2>
-            <div class="flex px-5 gap-5 flex-wrap justify-center items-center">
+            <div class="flex px-5 gap-5 flex-wrap justify-center items-center  mt-6">
                 <div
                     class="categorie relative overflow-hidden"
                     v-for="cat in props.categories"
@@ -210,7 +214,9 @@ const enter = (el) => {
                     <div
                         class="text-slide z-20 text-white absolute top-0 left-0 w-full h-full"
                     >
-                        <h3 class="absolute text-3xl">{{ cat.nom }}</h3>
+                        <h3 class="absolute text-3xl text-center">
+                            {{ cat.nom }}
+                        </h3>
                     </div>
                 </div>
             </div>
@@ -231,7 +237,9 @@ const enter = (el) => {
                     fugit.
                 </p>
                 <LearnMoreButton
-                    :label="`Découvrir ${car[0].marque_id + ' ' + car[0].modele}`"
+                    :label="`Découvrir ${
+                        car[0].marque_id + ' ' + car[0].modele
+                    }`"
                     :link="`/showroom/${car[0].id}`"
                 />
             </div>
@@ -310,7 +318,9 @@ const enter = (el) => {
                     fugit.
                 </p>
                 <LearnMoreButton
-                    :label="`Découvrir ${car[3].marque_id + ' ' + car[3].modele}`"
+                    :label="`Découvrir ${
+                        car[3].marque_id + ' ' + car[3].modele
+                    }`"
                     :link="`/showroom/${car[3].id}`"
                 />
             </div>
@@ -432,9 +442,9 @@ const enter = (el) => {
 }
 @media screen and (max-width: 1024px) {
     .slide {
-    width: 200px;
-    height: 225px;
-}
+        width: 200px;
+        height: 225px;
+    }
 }
 @media screen and (max-width: 992px) {
     .hero {
@@ -471,8 +481,12 @@ const enter = (el) => {
         text-align: center;
         z-index: 25;
     }
+    .landing {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
     .landing h2 {
-        font-size: 2.25rem;
+        font-size: 2rem;
     }
     .landing .categorie {
         height: 200px;
@@ -526,5 +540,9 @@ const enter = (el) => {
     }
 }
 @media screen and (max-width: 728px) {
+    .categorie {
+        height: 150px!important;
+        width: 150px!important;
+    }
 }
 </style>

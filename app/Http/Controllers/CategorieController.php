@@ -28,4 +28,10 @@ class CategorieController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'La catégoire a été créée!');
     }
+
+    public function indexCategorie()
+    {
+        $cartegories = Categorie::all();
+        return Inertia::render('Categorie/Index', ['categories' => $cartegories]);
+    }
 }

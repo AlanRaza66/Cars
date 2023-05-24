@@ -29,13 +29,16 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::prefix('/dashboard')->name('dashboard.')->group(function () {
+Route::prefix('/dashboard')->name('dashboard.')->group(function ($id) {
     Route::get('/vehicles/create', [CarController::class, 'create'])->name('vehicle.create');
     Route::get('/vehicles', [CarController::class, 'indexVehicle'])->name('vehicle');
     Route::get('/vehicles/{id}', [CarController::class, 'updateVehicle'])->name('vehicle.update');
     Route::put('/vehicles/update', [CarController::class, 'change'])->name('vehicle.change');
     Route::post('/vehicles', [CarController::class, 'store'])->name('vehicle.store');
-    Route::get('/categories', [CategorieController::class, 'create'])->name('categorie.create');
+    Route::delete('/vehicles/{id}', [CarController::class, 'delete'])->name('vehicle.delete');
+
+    Route::get('/categories', [CategorieController::class, 'indexCategorie'])->name('categorie');
+    Route::get('/categories/create', [CategorieController::class, 'create'])->name('categorie.create');
     Route::post('/categories',[CategorieController::class, 'store'])->name('categorie.store');
 });
 
