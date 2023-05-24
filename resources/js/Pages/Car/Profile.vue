@@ -249,6 +249,7 @@ const submit = () => {
                                             class="mt-1 block w-full"
                                             v-model="form.prix"
                                             min="0"
+                                            max="100000000000"
                                             required
                                             autofocus
                                         />
@@ -258,7 +259,7 @@ const submit = () => {
                                             :message="form.errors.prix"
                                         />
                                     </div>
-                                    <div class="flex w-full gap-x-2">
+                                    <div class="flex w-full gap-x-2 justify-end">
                                         <PrimaryButton
                                             class="ml-4 my-3"
                                             :class="{

@@ -17,7 +17,7 @@ const props = defineProps({
         </template>
 
         <div class="py-12">
-            <div class="w-full sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 w-full container">
                         <h2 class="w-full text-left text-3xl py-4 px-3">
@@ -37,7 +37,7 @@ const props = defineProps({
                             </div>
                         </div>
                         <div
-                            class="w-full flex flex-wrap gap-2 justify-start items-start"
+                            class="w-full flex flex-wrap gap-2 justify-center items-start"
                         >
                             <div
                                 v-for="car in cars"

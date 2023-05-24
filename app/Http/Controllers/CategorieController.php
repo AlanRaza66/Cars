@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Car;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -33,5 +34,13 @@ class CategorieController extends Controller
     {
         $cartegories = Categorie::all();
         return Inertia::render('Categorie/Index', ['categories' => $cartegories]);
+    }
+
+    public function updateCategorie($id)
+    {
+        $categorie = Categorie::find($id);
+        //$cars = Car::all()->where('categorie_id', $id);
+        $cars = $categorie->cars;
+        return Inertia::render('Categorie/Profile', ['categorie' => $categorie, 'cars' => $cars]);
     }
 }

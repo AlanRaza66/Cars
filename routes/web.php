@@ -39,6 +39,7 @@ Route::prefix('/dashboard')->name('dashboard.')->group(function ($id) {
 
     Route::get('/categories', [CategorieController::class, 'indexCategorie'])->name('categorie');
     Route::get('/categories/create', [CategorieController::class, 'create'])->name('categorie.create');
+    Route::get('/categories/{id}', [CategorieController::class, 'updateCategorie'])->name('categorie.update');
     Route::post('/categories',[CategorieController::class, 'store'])->name('categorie.store');
 });
 
