@@ -4,6 +4,9 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
+use App\Models\Car;
+use App\Models\Categorie;
+use App\Models\Marque;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -22,11 +25,11 @@ Route::get('/', [CarController::class, 'preface'])->name('home');
 
 Route::prefix('/showroom')->name('showroom.')->controller(CarController::class)->group(function ($id) {
     Route::get('/', 'index')->name('index');
-    Route::get('/{id}','pick')->name('car');
+    Route::get('/{id}', 'pick')->name('car');
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard', ['cars' => Car::all(), 'categories' => Categorie::all(), 'marque' => Marque::all()]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::prefix('/dashboard')->name('dashboard.')->group(function ($id) {
@@ -39,8 +42,10 @@ Route::prefix('/dashboard')->name('dashboard.')->group(function ($id) {
 
     Route::get('/categories', [CategorieController::class, 'indexCategorie'])->name('categorie');
     Route::get('/categories/create', [CategorieController::class, 'create'])->name('categorie.create');
+    Route::put('/categories/update', [CategorieController::class, 'change'])->name('categorie.change');
     Route::get('/categories/{id}', [CategorieController::class, 'updateCategorie'])->name('categorie.update');
-    Route::post('/categories',[CategorieController::class, 'store'])->name('categorie.store');
+    Route::delete('/categories/{id}', [CategorieController::class, 'delete'])->name('categorie.delete');
+    Route::post('/categories', [CategorieController::class, 'store'])->name('categorie.store');
 });
 
 Route::middleware('auth')->group(function () {

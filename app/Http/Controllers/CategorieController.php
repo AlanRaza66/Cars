@@ -27,7 +27,7 @@ class CategorieController extends Controller
             'cover' => $imagePath,
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'La catégoire a été créée!');
+        return redirect()->route('dashboard.categorie')->with('success', 'La catégoire a été créée!');
     }
 
     public function indexCategorie()
@@ -42,5 +42,26 @@ class CategorieController extends Controller
         //$cars = Car::all()->where('categorie_id', $id);
         $cars = $categorie->cars;
         return Inertia::render('Categorie/Profile', ['categorie' => $categorie, 'cars' => $cars]);
+    }
+    public function change(Request $request)
+    {
+        $cat = Categorie::find($request->input('id'));
+
+        $cat->nom = $request->input('nom');
+        $cat->description = $request->input('description');
+        $cat->save();
+        return redirect()->route('dashboard.categorie');
+    }
+
+    public function delete($id)
+    {
+        $cat = Categorie::find($id);
+        $cars = Car::all()->where('categorie_id', $id);
+        foreach ($cars as $car) {
+            # code...
+            $car->delete();
+        }
+        $cat->delete();
+        return redirect()->route('dashboard.categorie');
     }
 }

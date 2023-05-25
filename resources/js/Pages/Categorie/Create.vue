@@ -13,7 +13,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("form.categorie.store"));
+    form.post(route("dashboard.categorie.store"));
 };
 </script>
 <template>

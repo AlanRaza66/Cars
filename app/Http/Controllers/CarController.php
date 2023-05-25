@@ -16,36 +16,40 @@ class CarController extends Controller
     public function preface()
     {
         $cars = Car::take(4)->get();
-        foreach ($cars as $c) {
-            # code...
-            try {
-                //code...
-                $c->marque_id = $c->marque->nom;
-                $c->categorie_id = $c->categorie->nom;
-            } catch (\Throwable $th) {
-                //throw $th;
+        if (count($cars) < 4) {
+            return Inertia::render('Dashboard', ['cars' => Car::all(), 'categories' => Categorie::all(), 'marque' => Marque::all()]);
+        } else {
+            foreach ($cars as $c) {
+                # code...
+                try {
+                    //code...
+                    $c->marque_id = $c->marque->nom;
+                    $c->categorie_id = $c->categorie->nom;
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
             }
-        }
-        $categories = Categorie::all();
-        $car = Car::inRandomOrder()->take(4)->get();
-        foreach ($car as $c) {
-            # code...
-            try {
-                //code...
-                $c->marque_id = $c->marque->nom;
-                $c->categorie_id = $c->categorie->nom;
-            } catch (\Throwable $th) {
-                //throw $th;
+            $categories = Categorie::all();
+            $car = Car::inRandomOrder()->take(4)->get();
+            foreach ($car as $c) {
+                # code...
+                try {
+                    //code...
+                    $c->marque_id = $c->marque->nom;
+                    $c->categorie_id = $c->categorie->nom;
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
             }
-        }
-        return Inertia::render('Home', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-            'cars' => $cars,
-            'categories' => $categories,
-            'car' => $car,
+            return Inertia::render('Home', [
+                'canLogin' => Route::has('login'),
+                'canRegister' => Route::has('register'),
+                'cars' => $cars,
+                'categories' => $categories,
+                'car' => $car,
 
-        ]);
+            ]);
+        }
     }
     public function index()
     {
