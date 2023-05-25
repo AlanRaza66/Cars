@@ -17,7 +17,18 @@ class CarController extends Controller
     {
         $cars = Car::take(4)->get();
         if (count($cars) < 4) {
-            return Inertia::render('Dashboard', ['cars' => Car::all(), 'categories' => Categorie::all(), 'marque' => Marque::all()]);
+            $cars = Car::all();
+            foreach ($cars as $car) {
+                # code...
+                try {
+                    //code...
+                    $car->marque_id = $car->marque->nom;
+                    $car->categorie_id = $car->categorie->nom;
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+            }
+            return Inertia::render('Dashboard', ['cars' => $cars, 'categories' => Categorie::all(), 'marque' => Marque::all()]);
         } else {
             foreach ($cars as $c) {
                 # code...

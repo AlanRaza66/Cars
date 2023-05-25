@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ProfileController;
@@ -7,6 +8,7 @@ use Illuminate\Foundation\Application;
 use App\Models\Car;
 use App\Models\Categorie;
 use App\Models\Marque;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -29,10 +31,24 @@ Route::prefix('/showroom')->name('showroom.')->controller(CarController::class)-
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard', ['cars' => Car::all(), 'categories' => Categorie::all(), 'marque' => Marque::all()]);
+    $cars = Car::all();
+    foreach ($cars as $car) {
+        # code...
+        try {
+            //code...
+            $car->marque_id = $car->marque->nom;
+            $car->categorie_id = $car->categorie->nom;
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    return Inertia::render('Dashboard', ['cars' => $cars, 'categories' => Categorie::all(), 'marques' => Marque::all(), 'users' => User::all()]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::prefix('/dashboard')->name('dashboard.')->group(function ($id) {
+    Route::get('/user/create', [RegisteredUserController::class, 'create'])->name('user.create');
+    Route::post('/user', [RegisteredUserController::class, 'store'])->name('register');
+    
     Route::get('/vehicles/create', [CarController::class, 'create'])->name('vehicle.create');
     Route::get('/vehicles', [CarController::class, 'indexVehicle'])->name('vehicle');
     Route::get('/vehicles/{id}', [CarController::class, 'updateVehicle'])->name('vehicle.update');
