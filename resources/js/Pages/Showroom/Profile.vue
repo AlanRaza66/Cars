@@ -12,7 +12,7 @@ const separator = (value) => {
 };
 </script>
 <template>
-    <Head :title="car.marque + ' ' + car.modele"/>
+    <Head :title="car.marque.nom + ' ' + car.modele"/>
     <GuestLayoutVue>
         <main class="min-h-screen w-full">
             <div

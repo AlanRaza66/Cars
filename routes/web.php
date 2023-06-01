@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\MarqueController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use App\Models\Car;
@@ -46,6 +47,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::prefix('/dashboard')->name('dashboard.')->group(function ($id) {
+    Route::post('/marque', [MarqueController::class, 'store'])->name('marque.store');
     Route::get('/user/create', [RegisteredUserController::class, 'create'])->name('user.create');
     Route::post('/user', [RegisteredUserController::class, 'store'])->name('register');
     

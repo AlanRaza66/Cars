@@ -1,18 +1,33 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head, Link, useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import InputError from "@/Components/InputError.vue";
+import TextInput from "@/Components/TextInput.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 const props = defineProps({
     cars: { type: Object },
     categories: { type: Object },
     marques: { type: Object },
     users: { type: Object },
 });
+const form = useForm({
+    nom: "",
+});
 
+const openForm = ref(false);
 const separator = (value) => {
     var valueStr = String(value);
     var parts = valueStr.split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     return parts.join(".");
+};
+const submit = () => {
+    openForm.value = false;
+    form.post(route("dashboard.marque.store"), {
+        onFinish: () => form.reset("nom"),
+    });
 };
 </script>
 
@@ -184,14 +199,61 @@ const separator = (value) => {
                                     <caption
                                         class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800"
                                     >
-                                        <Link
-                                            :href="
-                                                route('dashboard.user.create')
-                                            "
-                                            class="ml-4 my-3 bg-red-600 inline-flex items-center px-4 py-2 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                                        <h3
+                                            @click="openForm = !openForm"
+                                            class="cursor-pointer ml-4 my-3 bg-red-600 inline-flex items-center px-4 py-2 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"
                                         >
-                                            Ajouter une marque
-                                        </Link>
+                                            {{
+                                                openForm
+                                                    ? "Cacher formulaire"
+                                                    : "Ajouter une marque"
+                                            }}
+                                        </h3>
+                                        <div
+                                            class="p-6"
+                                            :class="
+                                                !openForm ? 'hidden' : 'block'
+                                            "
+                                        >
+                                            <form
+                                                @submit.prevent="submit"
+                                                enctype="multipart/form-data"
+                                            >
+                                                <div class="my-3">
+                                                    <InputLabel
+                                                        class="text-white"
+                                                        for="nom"
+                                                        value="Marque"
+                                                    />
+
+                                                    <TextInput
+                                                        id="nom"
+                                                        type="text"
+                                                        class="mt-1 block w-full text-black"
+                                                        v-model="form.nom"
+                                                        required
+                                                        autofocus
+                                                    />
+
+                                                    <InputError
+                                                        class="mt-2"
+                                                        :message="
+                                                            form.errors.nom
+                                                        "
+                                                    />
+                                                </div>
+                                                <PrimaryButton
+                                                    class="ml-4 my-3 bg-slate-500"
+                                                    :class="{
+                                                        'opacity-25':
+                                                            form.processing,
+                                                    }"
+                                                    :disabled="form.processing"
+                                                >
+                                                    Créer la marque
+                                                </PrimaryButton>
+                                            </form>
+                                        </div>
                                     </caption>
                                 </table>
                             </div>
